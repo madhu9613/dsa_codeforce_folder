@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "CONDITION.C": "cpp",
+        "MSIN.C": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}

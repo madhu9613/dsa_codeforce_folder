@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive E-Commerce Categories</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .add-category {
+            margin: 20px 0;
+        }
+
+        .add-category input {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive E-Commerce Category Tree</h1>
+    <div id="category-tree"></div>
+
+    <div class="add-category">
+        <h3>Add a New Category</h3>
+        <label>
+            Parent Category: 
+            <input type="text" id="parent-category" placeholder="E.g., Electronics">
+        </label>
+        <label>
+            New Category: 
+            <input type="text" id="new-category" placeholder="E.g., Smartphones">
+        </label>
+        <button id="add-category-btn">Add Category</button>
+        <p id="message" style="color: red; font-size: 14px;"></p>
+    </div>
+
+    <script>
+        class CategoryNode {
+            constructor(name) {
+                this.name = name;
+                this.subcategories = [];
+            }
+        }
+
+        class CategoryTree {
+            constructor(rootName) {
+                this.root = new CategoryNode(rootName);
+            }
+
+            // Add a new category
+            addCategory(parentName, categoryName) {
+                const parent = this.findNode(this.root, parentName);
+                if (parent) {
+                    parent.subcategories.push(new CategoryNode(categoryName));
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            // Find a category by name
+            findNode(node, categoryName) {
+                if (!node) return null;
+                if (node.name === categoryName) return node;
+
+                for (let subcategory of node.subcategories) {
+                    const result = this.findNode(subcategory, categoryName);
+                    if (result) return result;
+                }
+                return null;
+            }
+
+            // Render the tree
+            renderTree(node, parentElement) {
+                if (!node) return;
+
+                const li = document.createElement('li');
+                li.textContent = node.name;
+
+                const ul = document.createElement('ul');
+                ul.classList.add('hidden'); // Initially hidden
+                li.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    ul.classList.toggle('hidden');
+                });
+
+                parentElement.appendChild(li);
+                li.appendChild(ul);
+
+                for (let subcategory of node.subcategories) {
+                    this.renderTree(subcategory, ul);
+                }
+            }
+
+            render(parentId) {
+                const container = document.getElementById(parentId);
+                container.innerHTML = ""; // Clear previous content
+                const ul = document.createElement('ul');
+                this.renderTree(this.root, ul);
+                container.appendChild(ul);
+            }
+        }
+
+        // Initialize the tree
+        const tree = new CategoryTree("E-Commerce");
+        tree.addCategory("E-Commerce", "Electronics");
+        tree.addCategory("E-Commerce", "Fashion");
+        tree.addCategory("Electronics", "Mobiles");
+        tree.addCategory("Electronics", "Laptops");
+        tree.addCategory("Mobiles", "Smartphones");
+        tree.addCategory("Mobiles", "Accessories");
+        tree.addCategory("Fashion", "Men");
+        tree.addCategory("Fashion", "Women");
+
+        // Render the initial tree
+        tree.render("category-tree");
+
+        // Add category functionality
+        const addCategoryBtn = document.getElementById("add-category-btn");
+        const parentInput = document.getElementById("parent-category");
+        const newCategoryInput = document.getElementById("new-category");
+        const message = document.getElementById("message");
+
+        addCategoryBtn.addEventListener("click", () => {
+            const parentName = parentInput.value.trim();
+            const newCategoryName = newCategoryInput.value.trim();
+
+            if (parentName === "" || newCategoryName === "") {
+                message.textContent = "Both fields are required.";
+                return;
+            }
+
+            const success = tree.addCategory(parentName, newCategoryName);
+            if (success) {
+                message.style.color = "green";
+                message.textContent = `"${newCategoryName}" added under "${parentName}".`;
+                tree.render("category-tree"); // Re-render the tree
+            } else {
+                message.style.color = "red";
+                message.textContent = `Parent category "${parentName}" not found.`;
+            }
+
+            // Clear inputs
+            parentInput.value = "";
+            newCategoryInput.value = "";
+        });
+    </script>
+</body>
+</html>
