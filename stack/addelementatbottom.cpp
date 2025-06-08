@@ -2,6 +2,7 @@
 #include <stack>
 #include<sstream>
 using namespace std;
+
 void addbottom(stack<int> &s, int x)
 {
     if (s.empty())
@@ -14,7 +15,7 @@ void addbottom(stack<int> &s, int x)
 
     addbottom(s, x);
     s.push(num);
-   
+
 }
 void print(stack<int> s)
 {

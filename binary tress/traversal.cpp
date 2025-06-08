@@ -132,8 +132,8 @@ int main() {
     node* root = NULL;
     root = buildTree(root);
 
-cout<<"Level order Traversal: \n";
-levelOrderTraversal(root);
+    cout<<"Level order Traversal: \n";
+    levelOrderTraversal(root);
 
     cout << "\nInorder Traversal: ";
     inorderTraversal(root);

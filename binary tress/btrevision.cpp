@@ -100,6 +100,7 @@ void inorder_traversal(node* root)
     cout<<root->data<<" ";
     inorder_traversal(root->right);
 }
+
 void preorder_traversal(node* root)
 {
     if(root==NULL)
@@ -145,6 +146,7 @@ Pair htanddia(node* root)
    ans.ht=max(left.ht,right.ht)+1;
    return ans;
 }
+
 void findlongestpathsun(node* root,int cursum, int curlength,int &maxsum,int &maxlength)
 {
     if(root==nullptr)
@@ -183,6 +185,7 @@ void ksum(node* root,vector<int>& path,int k,vector<vector<int>>&result)
     {
         return;
     }
+    
     path.push_back(root->data);
     int sum=0;
     vector<int> temp;

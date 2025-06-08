@@ -30,7 +30,6 @@ void heapify(int arr[], int size,int i)
 
      }
 }
-//heapsort 1 base t(c)->nlogn
 
 void heapSort(int arr[], int size)
 {

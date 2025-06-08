@@ -31,7 +31,7 @@ private:
             return ;
         }
 
-        int index = tolower(word[0]) - 'a'; // Convert to lowercase and find the index
+        int index = tolower(word[0]) - 'a';  // Convert to lowercase and find the index
         trienode *child;
 
         if (root->children[index] != NULL)
@@ -126,7 +126,7 @@ int main()
     t.insertword("raj");
     t.insertword("love");
     t.insertword("rajendra");
-    t.insertword("lovelina");
+    t.insertword("love");
     t.insertword("raju");
     t.insertword("long");
     t.insertword("rohit");

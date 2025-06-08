@@ -25,6 +25,8 @@ void insertatend(node* &tail,node* &head, int d)
         tail = temp;
     }
 }
+
+
 void print(node* head)
 {
     node* temp=head;
@@ -35,6 +37,8 @@ void print(node* head)
     }
     cout<<"NULL"<<endl;
 }
+
+
 node* revlinkedlist(node* head) //its return a node:: 
 {
     if(head==NULL || head->next==NULL)
