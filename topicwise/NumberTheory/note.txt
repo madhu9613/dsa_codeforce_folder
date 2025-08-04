@@ -1,0 +1,37 @@
+Divisor:
+---------
+a|b: it means a divides b alsoc can be called that b is divisible by a; b%a==0
+factor" of number x is y if y|x'
+
+Prime factorization:
+__________________>
+1.Cant have prime number larger than sqrt(x); so i need to to check up tilll sqrt(x);
+.we expect 0(x/logx) primes in the range [1,x];
+
+Moduler Division
+------------------
+(1/x)%m=x^-1 %m=y such that xy%m=1;
+only exist if gcd(x,m)=1;
+...want y such that xy%m=1;
+For Prime m:
+-------------->
+ Fermat little Theorem:a^m-1%m=1;
+ y become:x^m-2;
+ .
+
+------> 
+for coprime x,m gcd(x,m)=1;
+--->extend euclidean;
+
+gcd:
+===========>
+gcd(x,y)=largest g where g|x and g|y;
+
+if x=p1^ap2^b..... y=p1^cp2^d.. then g=p1^(min(a,c))p2^min(b,d)...
+
+Extended Euclidean ALgorithm:
+=========================>
+ax+by=1;[gcd(a,b)=1]
+.>ax+by=gcd(a,b);
+.>cz%m=1; solve for z;
+.>a=c, b=m solving cx+my=1;

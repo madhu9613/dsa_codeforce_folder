@@ -20,34 +20,37 @@ const int INF = INT_MAX;
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<vector<int>> dp(n + 1, vector<int>(k + 1, 0));
-    // dp[i][len]=at len i place i here
-    // one length sequences:
-    for (int j = 1; j <= n; j++)
+    int n;
+    cin >> n;
+    vi a(2 * n);
+    vi even, odd;
+    for (int i = 0; i < 2 * n; i++)
     {
-        dp[j][1] = 1;
-    }
-    for (int len = 2; len <= k; ++len)
-    {
-        for (int j = 1; j <= n; j++)
+        cin >> a[i];
+        if (a[i] % 2 == 0)
         {
-            for (int m = j; m <= n; m += j)
-            {
-                dp[m][len] = (dp[m][len] + dp[j][len-1]) % MOD;
-            }
+            even.pb(a[i]);
+        }
+        else
+        {
+            odd.pb(a[i]);
         }
     }
 
-    int res=0;
-    for(int i=1;i<=n;i++)
+    vector<pair<int, int>> res;
+    for (int i = 0; i < odd.size() - 1; i++)
     {
-        res=(res+dp[i][k])%MOD;
+        res.pb({odd[i], odd[i + 1]});
     }
-    cout<<res<<endl;
+    for (int i = 0; i < even.size() - 1; i++)
+    {
+        res.pb({even[i], even[i + 1]});
+    }
 
-
+    for (auto &[a, b] : res)
+    {
+        cout << a << " " << b << endl;
+    }
 }
 
 int main()
@@ -55,7 +58,7 @@ int main()
     ios::sync_with_stdio(false);
     cin.tie(0);
     int t = 1;
-    
+    cin >> t;
     while (t--)
         solve();
     return 0;
