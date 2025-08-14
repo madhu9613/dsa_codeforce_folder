@@ -45,6 +45,7 @@ void solve()
             dp[i] = 1;
             prev[i] = -1;
         }
+        
         if (dp[i] > len[val])
         {
             len[val] = dp[i];
