@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "*.dbclient-js": "javascript",
+        "list": "cpp",
+        "random": "cpp",
+        "set": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "flat_map": "cpp",
+        "flat_set": "cpp"
+    }
+}
