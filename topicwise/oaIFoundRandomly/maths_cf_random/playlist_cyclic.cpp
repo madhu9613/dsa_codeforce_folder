@@ -1,0 +1,89 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+using pii = pair<int,int>;
+using pll = pair<ll,ll>;
+#define vi vector<int>
+#define vll vector<ll>
+#define vpi vector<pii>
+#define vpll vector<pll>
+
+#define all(x) (x).begin(), (x).end()
+#define rall(x) (x).rbegin(), (x).rend()
+
+const ll INF = 1e18;
+const int MOD = 1000000007;
+
+// Fast exponentiation (a^b % mod)
+ll modpow(ll a, ll b, ll mod = MOD) {
+    ll res = 1;
+    while (b) {
+        if (b & 1) res = res * a % mod;
+        a = a * a % mod;
+        b >>= 1;
+    }
+    return res;
+}
+
+ll modinv(ll a, ll mod = MOD) {
+    return modpow(a, mod - 2, mod);
+}
+
+// GCD
+ll gcd(ll a, ll b) {
+    return b ? gcd(b, a % b) : a;
+}
+
+// LCM
+ll lcm(ll a, ll b) {
+    return a / gcd(a, b) * b;
+}
+
+void solve() {
+    int n;
+    cin>>n;
+    vi a(n+1);
+    vi nxt(n+1,-1);
+    vi del(n+1,0);
+    queue<int>q;
+    
+    for(int i=1;i<=n;i++){
+        cin>>a[i];
+        nxt[i]=(i%n)+1;
+        q.push(i);
+    }
+    vi ans;
+    while(!q.empty()){
+        int i=q.front(); q.pop();
+        if(del[i]){
+           
+            continue;
+        }
+        if(gcd(a[i],a[nxt[i]])==1){
+            ans.push_back(nxt[i]);
+            del[nxt[i]]=true;
+            nxt[i]=nxt[nxt[i]];
+            
+            
+            q.push(i);
+        }
+    }
+    cout<<ans.size()<<" ";
+    for(int x:ans){
+        cout<<x<<" ";
+    }
+    
+    cout<<endl;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t = 1;
+    cin >> t;
+    while (t--) solve();
+
+    return 0;
+}
