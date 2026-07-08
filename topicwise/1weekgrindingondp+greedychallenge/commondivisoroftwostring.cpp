@@ -41,14 +41,38 @@ ll lcm(ll a, ll b) {
 }
 
 void solve() {
-    int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    
+    string s1,s2;cin>>s1>>s2;
+    if(s1+s2!=s2+s1){
+        cout<<0<<endl;
+        return;
     }
-    else{
-        cout<<1<<endl;
-    }
+    int n=s1.size();
+    int m=s2.size();
+    int g=gcd(n,m);
+    int ans=0;
+    for(int len=1;len<=g;len++){
+        if(g%len!=0) continue;
+        string d=s1.substr(0,len);
+        bool ok=true;
+        for(int i=0;i<n;i++){
+            if(s1[i]!=d[i%len]){
+                ok=false;
+                break;
+            }
+        }
 
+        for(int i=0;i<m;i++){
+            if(s2[i]!=d[i%len]){
+                ok=false;
+                break;
+            }
+        }
+        if(ok){
+            ans++;
+        }
+    }
+    cout<<ans<<endl;
 }
 
 int main() {
@@ -56,7 +80,7 @@ int main() {
     cin.tie(nullptr);
 
     int t = 1;
-    cin >> t;
+    
     while (t--) solve();
 
     return 0;

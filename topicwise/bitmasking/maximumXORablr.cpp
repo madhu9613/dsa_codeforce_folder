@@ -41,14 +41,16 @@ ll lcm(ll a, ll b) {
 }
 
 void solve() {
-    int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
-    }
-    else{
-        cout<<1<<endl;
-    }
+    ll l,r;cin>>l>>r;
+     long long x = l ^ r;   
 
+        long long ans = 0;
+        while (x) {
+            ans = (ans << 1) | 1;
+            x >>= 1;
+        }
+
+        cout<<ans<<endl;
 }
 
 int main() {
@@ -56,7 +58,7 @@ int main() {
     cin.tie(nullptr);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
 
     return 0;

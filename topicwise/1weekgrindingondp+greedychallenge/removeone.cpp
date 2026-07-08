@@ -42,13 +42,34 @@ ll lcm(ll a, ll b) {
 
 void solve() {
     int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    vi a(n);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
     }
-    else{
-        cout<<1<<endl;
+    vi pref(n,1),suf(n,1);
+    for(int i=1;i<n;i++){
+        if(a[i]>a[i-1]){
+            pref[i]=pref[i-1]+1;
+        }
     }
 
+    for(int i=n-2;i>=0;i--){
+        if(a[i]<a[i+1]){
+            suf[i]=suf[i+1]+1;
+        }
+    }
+    int ans=1;
+    for(int i=0;i<n;i++){
+        ans=max(ans,pref[i]);
+    }
+
+    for(int i=1;i<n-1;i++){
+        if(a[i-1]<a[i+1]){
+            ans=max(ans,pref[i-1]+suf[i+1]);
+        }
+    }
+
+    cout<<ans<<endl;
 }
 
 int main() {
@@ -56,7 +77,7 @@ int main() {
     cin.tie(nullptr);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
 
     return 0;

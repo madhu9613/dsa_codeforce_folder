@@ -42,13 +42,19 @@ ll lcm(ll a, ll b) {
 
 void solve() {
     int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    vll s(n);
+    for(int i=0;i<n;i++){
+        cin>>s[i];
     }
-    else{
-        cout<<1<<endl;
+    sort(all(s));
+    vector<vll>dp(n,vll(n,0));
+    for(int len=2;len<=n;len++){
+        for(int l=0;l+len-1<n;l++){
+            int r=l+len-1;
+            dp[l][r]=(s[r]-s[l])+min(dp[l+1][r],dp[l][r-1]);
+        }
     }
-
+    cout<<dp[0][n-1]<<endl;
 }
 
 int main() {
@@ -56,7 +62,7 @@ int main() {
     cin.tie(nullptr);
 
     int t = 1;
-    cin >> t;
+    
     while (t--) solve();
 
     return 0;

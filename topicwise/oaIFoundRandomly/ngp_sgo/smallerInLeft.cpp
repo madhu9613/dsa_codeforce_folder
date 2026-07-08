@@ -42,12 +42,21 @@ ll lcm(ll a, ll b) {
 
 void solve() {
     int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    vll a(n+1);
+    for(int i=1;i<=n;i++){
+        cin>>a[i];
     }
-    else{
-        cout<<1<<endl;
+    vi L(n+1,0);
+    for(int i=2;i<=n;i++){
+        L[i]=i-1;
+        while(L[i]>0 && a[L[i]]>=a[i]){
+            L[i]=L[L[i]];
+        }
     }
+
+    for(int i=1;i<=n;i++){
+       cout<<L[i]<<" ";
+    }cout<<endl;
 
 }
 
@@ -56,7 +65,7 @@ int main() {
     cin.tie(nullptr);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
 
     return 0;

@@ -41,14 +41,9 @@ ll lcm(ll a, ll b) {
 }
 
 void solve() {
-    int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
-    }
-    else{
-        cout<<1<<endl;
-    }
-
+    // gcd(a,b)+lcm(a,b)=x a=1 and b=1-x 
+    int x;cin>>x;
+    cout<<1<<" "<<x-1<<endl;
 }
 
 int main() {

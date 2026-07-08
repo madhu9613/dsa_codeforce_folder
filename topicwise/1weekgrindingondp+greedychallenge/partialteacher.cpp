@@ -41,22 +41,40 @@ ll lcm(ll a, ll b) {
 }
 
 void solve() {
-    int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    int n;
+    string s;
+    cin>>n>>s;
+    vi a(n,1);
+    for(int i=0;i<n-1;i++){
+        if(s[i]=='R'){
+            a[i+1]=max(a[i+1],a[i]+1);
+        }
+        else if(s[i]=='='){
+        a[i+1]=max(a[i+1],a[i]);
+        }
     }
-    else{
-        cout<<1<<endl;
+    for(int i =n-2;i>=0;i--){
+        if(s[i]=='L'){
+            a[i]=max(a[i],a[i+1]+1);
+        }
+        else if(s[i]=='='){
+            a[i]=max(a[i],a[i+1]);
+        }    
     }
-
+    for(int i=0;i<n;i++){
+        cout<<a[i]<<" ";
+    }
+    cout<<endl;
 }
+
+
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
 
     return 0;

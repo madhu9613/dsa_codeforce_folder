@@ -40,15 +40,33 @@ ll lcm(ll a, ll b) {
     return a / gcd(a, b) * b;
 }
 
+// need to chose a subsequence such that product of all element is ==1 mod n; i mean can represet in 1+kn;
+
 void solve() {
     int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    vi res;
+    ll prod=1;
+    for(int i=1;i<n;i++){
+        if(gcd(i,n)==1){
+            res.push_back(i);
+            prod=(prod*i)%n;
+        }
     }
-    else{
-        cout<<1<<endl;
+    if(prod==1){
+        cout<<res.size()<<endl;
+        for(int x:res){
+            cout<<x<<" ";
+        }
+        cout<<endl;
+    }else{
+        cout<<res.size()-1<<endl;
+        for(int x:res){
+            if(x!=prod){
+                cout<<x<<" ";
+            }
+        }
+        cout<<endl;
     }
-
 }
 
 int main() {
@@ -56,7 +74,7 @@ int main() {
     cin.tie(nullptr);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
 
     return 0;

@@ -40,15 +40,44 @@ ll lcm(ll a, ll b) {
     return a / gcd(a, b) * b;
 }
 
-void solve() {
-    int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
-    }
-    else{
-        cout<<1<<endl;
-    }
+ll f(vll &a){
+    int n=a.size();
+    vll dp(n+1,LLONG_MAX);
+    dp[0]=0;
+    for(int i=1;i<=n;i++){
+        if(i>=2 && dp[i-2]!=LLONG_MAX){
+            dp[i]=min(dp[i],dp[i-2]+abs(a[i-2]-a[i-1]));
+        }
 
+        if(i>=3 && dp[i-3]!=LLONG_MAX){
+            vll v={a[i-3],a[i-2],a[i-1]};
+            sort(all(v));
+            ll med=v[1];
+            ll cost=abs(v[0]-med)+abs(v[1]-med)+abs(v[2]-med);
+            dp[i]=min(dp[i],dp[i-3]+cost);
+        }
+    }
+    return dp[n];
+}
+
+void solve() {
+
+
+ int n;cin>>n;
+ vll a(n);
+ for(int i=0;i<n;i++){
+    cin>>a[i];
+ }   
+ ll ans=LLONG_MAX;
+ for(int i=0;i<3;i++){
+    vll b;
+    for(int j=0;j<n;j++){
+        b.push_back(a[(i+j)%n]);
+    }
+    ans=min(ans,f(b));
+ }
+
+ cout<<ans<<endl;
 }
 
 int main() {

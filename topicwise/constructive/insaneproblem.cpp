@@ -41,14 +41,18 @@ ll lcm(ll a, ll b) {
 }
 
 void solve() {
-    int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    ll k,l1,r1,l2,r2;cin>>k>>l1>>r1>>l2>>r2;
+    ll ans=0;
+    ll p=1;
+    while(p<=r2){
+        ll left = max(l1, (l2 + p - 1) / p);
+        ll right = min(r1, r2 / p);
+        if(left<=right){
+            ans+=(right-left+1);
+        }
+        p*=k;
     }
-    else{
-        cout<<1<<endl;
-    }
-
+    cout<<ans<<endl;
 }
 
 int main() {

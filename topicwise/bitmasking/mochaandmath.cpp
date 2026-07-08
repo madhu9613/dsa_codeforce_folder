@@ -1,45 +1,62 @@
-// Author: Madhujya Rajkhowa
 #include <bits/stdc++.h>
 using namespace std;
 
-#define ll long long
-#define pb push_back
+using ll = long long;
+using pii = pair<int,int>;
+using pll = pair<ll,ll>;
 #define vi vector<int>
 #define vll vector<ll>
+#define vpi vector<pii>
+#define vpll vector<pll>
+
 #define all(x) (x).begin(), (x).end()
-#define endl '\n'
+#define rall(x) (x).rbegin(), (x).rend()
 
-const int MOD = 1e9 + 7;
-const int INF = INT_MAX;
+const ll INF = 1e18;
+const int MOD = 1000000007;
 
-// see if we perform bitwise and operation it will not increase the value either it decrease or stay same
-void solve()
-{
-
-    //see i can choose any intervel [l,r] an perfom al+i=(al+i & ar-i) if we choose repetadely we can see that i can make a number equal to (and of all the number
-    
-    int n;
-    cin >> n;
-    vll a(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
+// Fast exponentiation (a^b % mod)
+ll modpow(ll a, ll b, ll mod = MOD) {
+    ll res = 1;
+    while (b) {
+        if (b & 1) res = res * a % mod;
+        a = a * a % mod;
+        b >>= 1;
     }
-    ll x = a[0];
-    for (int i = 0; i < n; i++)
-    {
-        x &= a[i];
-    }
-    cout << x << endl;
+    return res;
 }
 
-int main()
-{
+ll modinv(ll a, ll mod = MOD) {
+    return modpow(a, mod - 2, mod);
+}
+
+// GCD
+ll gcd(ll a, ll b) {
+    return b ? gcd(b, a % b) : a;
+}
+
+// LCM
+ll lcm(ll a, ll b) {
+    return a / gcd(a, b) * b;
+}
+
+void solve() {
+    int n;cin>>n;
+    int x;cin>>x;
+    for(int i=1;i<n;i++){
+        int y;cin>>y;
+        x&=y;
+    }
+    cout<<x<<endl;
+}
+
+int main() {
     ios::sync_with_stdio(false);
-    cin.tie(0);
+    cin.tie(nullptr);
+
     int t = 1;
     cin >> t;
-    while (t--)
-        solve();
+    while (t--) solve();
+
     return 0;
 }

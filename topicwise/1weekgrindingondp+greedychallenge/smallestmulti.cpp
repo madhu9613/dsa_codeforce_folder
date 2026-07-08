@@ -41,14 +41,23 @@ ll lcm(ll a, ll b) {
 }
 
 void solve() {
+
     int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
-    }
-    else{
-        cout<<1<<endl;
+    string s;cin>>s;
+    ll ans=0;
+    vi used(n+1,0);
+    for(int k=1;k<=n;k++){
+        for(int i=k;i<=n;i+=k){
+            if(s[i-1]=='1') break;
+            if(!used[i]){
+                used[i]=1;
+                ans+=k;
+            }
+        }
     }
 
+    cout<<ans<<endl;
+    
 }
 
 int main() {

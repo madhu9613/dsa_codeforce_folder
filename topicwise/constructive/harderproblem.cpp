@@ -42,13 +42,30 @@ ll lcm(ll a, ll b) {
 
 void solve() {
     int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    vi a(n),b(n,0),used(n+1,0);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
     }
-    else{
-        cout<<1<<endl;
+    for(int i=0;i<n;i++){
+        if(!used[a[i]]){
+            b[i]=a[i];
+            used[a[i]]=1;
+        }
     }
-
+    int ptr=1;
+    for(int i=0;i<n;i++){
+        if(b[i]==0){
+            while(used[ptr]){
+                ptr++;
+            }
+            b[i]=ptr;
+            used[ptr]=1;
+        }
+    }
+    for(int x:b){
+        cout<<x<<" ";
+    }cout<<endl;
+    
 }
 
 int main() {

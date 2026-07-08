@@ -41,14 +41,32 @@ ll lcm(ll a, ll b) {
 }
 
 void solve() {
-    int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
-    }
-    else{
-        cout<<1<<endl;
+ int n,k;cin>>n>>k;
+ vi a(n),cnt(n+1,0);
+ for(int i=0;i<n;i++){
+    cin>>a[i];
+    cnt[a[i]]++;
+ }   
+ vi pref(n+1,0);
+ for(int i=1;i<=n;i++){
+    pref[i]=pref[i-1]+cnt[i];
+ }
+ for(int d=n;d>=1;d--){
+    int lim=min(n,4*d-1);
+    int under=pref[lim];
+    int mul=0;
+    for(int j=1;j<=3;j++){
+        if(j*d<=n){
+            mul+=cnt[j*d];
+        }
     }
 
+    int badcnt=under-mul;
+    if(badcnt<=k){
+        cout<<d<<endl;
+        return;
+    }
+ }
 }
 
 int main() {

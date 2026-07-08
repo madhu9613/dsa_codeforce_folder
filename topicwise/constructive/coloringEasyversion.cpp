@@ -40,15 +40,19 @@ ll lcm(ll a, ll b) {
     return a / gcd(a, b) * b;
 }
 
-void solve() {
-    int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
-    }
-    else{
-        cout<<1<<endl;
-    }
+void solve()
+{
+    int k;
+    cin >> k;
 
+    ll total = modpow(2, k, MOD - 1) - 2;
+    if (total < 0)
+        total += (MOD - 1);
+
+    ll res = modpow(4, total);
+    res = (res * 6) % MOD;
+
+    cout << res << endl;
 }
 
 int main() {
@@ -56,7 +60,7 @@ int main() {
     cin.tie(nullptr);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
 
     return 0;

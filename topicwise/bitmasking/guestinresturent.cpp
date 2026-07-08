@@ -40,15 +40,50 @@ ll lcm(ll a, ll b) {
     return a / gcd(a, b) * b;
 }
 
+
+
 void solve() {
     int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    vi a(n);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+
     }
-    else{
-        cout<<1<<endl;
+    int p;cin>>p;
+    vector<double>fact(n+1,1);
+    for(int i=1;i<=n;i++){
+        fact[i]=fact[i-1]*i;
+    }
+    double ans=0;
+    for(int i=0;i<n;i++){
+        vector<vector<double>>dp(n+1,vector<double>(p+1,0));
+        dp[0][0]=1;
+        for(int j=0;j<n;j++){
+            if(j==i){
+                continue;
+
+            }
+            for(int k=n;k>=1;k--){
+                for(int s=p;s>=a[j];s--){
+                    dp[k][s]+=dp[k-1][s-a[j]];
+                }
+            }
+        }
+
+    double prob=0;
+    for(int k=0;k<n;k++){
+        for(int s=0;s<=p;s++){
+            if(s+a[i]<=p){
+                prob+=dp[k][s]*fact[k]*fact[n-k-1];
+            }
+        }
     }
 
+    prob/=fact[n];
+    ans+=prob;
+
+    }
+    cout<<fixed<<setprecision(10)<<ans<<endl;
 }
 
 int main() {
@@ -56,7 +91,7 @@ int main() {
     cin.tie(nullptr);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
 
     return 0;

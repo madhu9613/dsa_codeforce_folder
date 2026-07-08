@@ -42,13 +42,42 @@ ll lcm(ll a, ll b) {
 
 void solve() {
     int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    vi a(n);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
     }
-    else{
-        cout<<1<<endl;
+    int g=a[0];
+    for(auto x:a){
+        g=gcd(g,x);
+    }
+    int cnt=count(all(a),g);
+    if(cnt){
+        cout<<n-cnt<<endl;
+        return;
     }
 
+    vi dist(5005,INT_MAX);
+    queue<int>q;
+    for(int x:a){
+        dist[x]=1;
+        q.push(x);
+    }
+    while(!q.empty()){
+        int x=q.front();
+        q.pop();
+        for(int y:a){
+            int z=gcd(x,y);
+            if(dist[z]>dist[x]+1){
+                dist[z]=dist[x]+1;
+                q.push(z);
+            }
+        }
+    }
+
+    int k=dist[g];
+    cout<<n+k-2<<endl;
+
+    
 }
 
 int main() {

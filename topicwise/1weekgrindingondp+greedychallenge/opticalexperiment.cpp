@@ -42,13 +42,28 @@ ll lcm(ll a, ll b) {
 
 void solve() {
     int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    vi x(n),y(n),pos(n+1);
+    for(int i=0;i<n;i++) cin>>x[i];
+    for(int i=0;i<n;i++) {
+        cin>>y[i];
+        pos[y[i]]=i;
     }
-    else{
-        cout<<1<<endl;
+    vi a(n);
+    for(int i=0;i<n;i++){
+        a[i]=pos[x[i]];
     }
-
+    vi lis;
+    for(int i=0;i<n;i++){
+        int val=-a[i];
+        auto it=lower_bound(all(lis),val);
+        if(it==lis.end()){
+            lis.push_back(val);
+        }
+        else {
+            *it=val;
+        }
+    }
+    cout<<lis.size()<<endl;
 }
 
 int main() {
@@ -56,7 +71,7 @@ int main() {
     cin.tie(nullptr);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
 
     return 0;

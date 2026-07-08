@@ -41,14 +41,35 @@ ll lcm(ll a, ll b) {
 }
 
 void solve() {
-    int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    ll u,v;cin>>u>>v;
+    if(u>v){
+        cout<<-1<<endl;
+        return;
+    }
+    if(u==v){
+        if(u==0){
+            cout<<0<<endl;
+        }
+        else{
+            cout<<1<<endl;
+            cout<<u<<endl;
+        }
+        return;
+    }
+    
+    if((v-u)%2){
+        cout<<-1<<endl;
+        return;
+    }
+    ll k=(v-u)/2;
+    if((k&u)==0){
+        cout<<2<<endl;
+        cout<<k<<" "<<(k+u)<<endl;
     }
     else{
-        cout<<1<<endl;
+        cout<<3<<endl;
+        cout<<k<<" "<<k<<" "<<u<<endl;
     }
-
 }
 
 int main() {
@@ -56,7 +77,7 @@ int main() {
     cin.tie(nullptr);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
 
     return 0;

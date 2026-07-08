@@ -40,15 +40,37 @@ ll lcm(ll a, ll b) {
     return a / gcd(a, b) * b;
 }
 
-void solve() {
+void solve(){
     int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
+    vi r(n),indeg(n,0);
+    for(int i=0;i<n;i++){
+        cin>>r[i];
+        r[i]--;
+        indeg[r[i]]++;
     }
-    else{
-        cout<<1<<endl;
+    queue<int>q;
+    for(int i=0;i<n;i++){
+        if(indeg[i]==0){
+            q.push(i);
+        }
     }
-
+    int layers=0;
+    while (!q.empty())
+    {
+        int sz=q.size();
+        layers++;
+        while(sz--){
+            int u=q.front();
+            q.pop();
+            int v=r[u];
+            indeg[v]--;
+            if(indeg[v]==0){
+                q.push(v);
+            }
+        }
+    }
+    cout<<layers+2<<endl;
+    
 }
 
 int main() {

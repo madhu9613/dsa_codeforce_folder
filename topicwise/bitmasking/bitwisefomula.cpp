@@ -41,14 +41,20 @@ ll lcm(ll a, ll b) {
 }
 
 void solve() {
-    int n;cin>>n;
-    if(n>=2){
-        cout<<n/2<<endl;
-    }
-    else{
-        cout<<1<<endl;
-    }
+    int n,m;cin>>n>>m;
+    vector<string>name(n);
+    map<string,int>id;
+    vector<vi>dp(n,vi(2,0));
+    vector<string>type(n);
+    vector<string>op(n),left(n),right(n);
+    for(int i=0;i<n;i++){
+        cin>>name[i];
+        id[name[i]]=i;
+        string temp;
+        cin>>temp;
 
+        cin>>temp;
+    }    
 }
 
 int main() {
@@ -56,7 +62,7 @@ int main() {
     cin.tie(nullptr);
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
 
     return 0;
