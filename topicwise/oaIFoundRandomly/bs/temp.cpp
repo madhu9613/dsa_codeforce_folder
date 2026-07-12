@@ -1,78 +1,83 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <string>
+#include <algorithm>
+
 using namespace std;
 
-using ll = long long;
-using vll = vector<ll>;
+const int INF = 1e9;
+int n, m;
+int dx[] = {0, 0, 1, -1};
+int dy[] = {1, -1, 0, 0};
 
-const int MOD = 1000000007;
-
-vll a;
-
-ll merge_count(int l, int r)
+void bfs(const vector<string> &grid, vector<vector<int>> &dist, char state)
 {
-    if (l >= r)
-        return 0;
-
-    int mid = (l + r) / 2;
-
-    ll inv = merge_count(l, mid) + merge_count(mid + 1, r);
-
-    vector<ll> temp;
-    temp.reserve(r - l + 1);
-
-    int i = l, j = mid + 1;
-
-    while (i <= mid && j <= r)
+    queue<pair<int, int>> q;
+    for (int i = 0; i < n; ++i)
     {
-        if (a[i] <= a[j])
+        for (int j = 0; j < m; ++j)
         {
-            temp.push_back(a[i]);
-            i++;
-        }
-        else
-        {
-            // a[i] > a[j]
-            inv += (mid - i + 1);
-            temp.push_back(a[j]);
-            j++;
+            if (grid[i][j] == state)
+            {
+                dist[i][j] = 0;
+                q.push({i, j});
+            }
         }
     }
 
-    while (i <= mid)
-        temp.push_back(a[i++]);
+    while (!q.empty())
+    {
+        auto [x, y] = q.front();
+        q.pop();
 
-    while (j <= r)
-        temp.push_back(a[j++]);
-
-    for (int k = 0; k < (int)temp.size(); k++)
-        a[l + k] = temp[k];
-
-    return inv;
-}
-
-void solve()
-{
-    int n;
-    cin >> n;
-
-    a.resize(n);
-
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    cout << merge_count(0, n - 1) << '\n';
+        for (int i = 0; i < 4; ++i)
+        {
+            int nx = x + dx[i], ny = y + dy[i];
+            if (nx >= 0 && nx < n && ny >= 0 && ny < m && grid[nx][ny] != '#')
+            {
+                int cost = (grid[nx][ny] == '.') ? 1 : 0;
+                if (dist[nx][ny] > dist[x][y] + cost)
+                {
+                    dist[nx][ny] = dist[x][y] + cost;
+                    q.push({nx, ny});
+                }
+            }
+        }
+    }
 }
 
 int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    cin >> n >> m;
+    vector<string> grid(n);
+    for (int i = 0; i < n; ++i)
+        cin >> grid[i];
 
-    int t;
-    cin >> t;
+    vector<vector<int>> d1(n, vector<int>(m, INF)), d2(d1), d3(d1);
+    bfs(grid, d1, '1');
+    bfs(grid, d2, '2');
+    bfs(grid, d3, '3');
 
-    while (t--)
-        solve();
+    int ans = INF;
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = 0; j < m; ++j)
+        {
+            if (d1[i][j] == INF || d2[i][j] == INF || d3[i][j] == INF)
+                continue;
 
+            int current_sum = d1[i][j] + d2[i][j] + d3[i][j];
+            // If junction is a '.', we counted it 3 times, need it 1 time: subtract 2
+            // If junction is a state cell, we counted it as 0, which is correct
+            if (grid[i][j] == '.')
+                current_sum -= 2;
+            ans = min(ans, current_sum);
+        }
+    }
+
+    cout << (ans >= INF ? -1 : ans) << endl;
     return 0;
 }
