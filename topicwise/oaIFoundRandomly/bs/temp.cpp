@@ -1,83 +1,70 @@
 #include <iostream>
 #include <vector>
-#include <queue>
 #include <string>
-#include <algorithm>
 
 using namespace std;
 
-const int INF = 1e9;
 int n, m;
-int dx[] = {0, 0, 1, -1};
-int dy[] = {1, -1, 0, 0};
+vector<string> grid;
 
-void bfs(const vector<string> &grid, vector<vector<int>> &dist, char state)
+// DFS returns true if a path to (n-1, m-1) is found
+bool dfs(int r, int c)
 {
-    queue<pair<int, int>> q;
-    for (int i = 0; i < n; ++i)
+    if (r >= n || c >= m || grid[r][c] == '#')
     {
-        for (int j = 0; j < m; ++j)
-        {
-            if (grid[i][j] == state)
-            {
-                dist[i][j] = 0;
-                q.push({i, j});
-            }
-        }
+        return false;
+    }
+    if (r == n - 1 && c == m - 1)
+    {
+        return true;
     }
 
-    while (!q.empty())
+    // Mark the cell as visited/blocked to avoid revisiting
+    // and to block it for the second DFS pass.
+    if (r != 0 || c != 0)
     {
-        auto [x, y] = q.front();
-        q.pop();
-
-        for (int i = 0; i < 4; ++i)
-        {
-            int nx = x + dx[i], ny = y + dy[i];
-            if (nx >= 0 && nx < n && ny >= 0 && ny < m && grid[nx][ny] != '#')
-            {
-                int cost = (grid[nx][ny] == '.') ? 1 : 0;
-                if (dist[nx][ny] > dist[x][y] + cost)
-                {
-                    dist[nx][ny] = dist[x][y] + cost;
-                    q.push({nx, ny});
-                }
-            }
-        }
+        grid[r][c] = '#';
     }
+
+    // Try moving Down, then Right
+    if (dfs(r + 1, c))
+        return true;
+    if (dfs(r, c + 1))
+        return true;
+
+    return false;
 }
 
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cin >> n >> m;
-    vector<string> grid(n);
-    for (int i = 0; i < n; ++i)
-        cin >> grid[i];
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    vector<vector<int>> d1(n, vector<int>(m, INF)), d2(d1), d3(d1);
-    bfs(grid, d1, '1');
-    bfs(grid, d2, '2');
-    bfs(grid, d3, '3');
+    if (!(cin >> n >> m))
+        return 0;
 
-    int ans = INF;
+    grid.resize(n);
     for (int i = 0; i < n; ++i)
     {
-        for (int j = 0; j < m; ++j)
-        {
-            if (d1[i][j] == INF || d2[i][j] == INF || d3[i][j] == INF)
-                continue;
-
-            int current_sum = d1[i][j] + d2[i][j] + d3[i][j];
-            // If junction is a '.', we counted it 3 times, need it 1 time: subtract 2
-            // If junction is a state cell, we counted it as 0, which is correct
-            if (grid[i][j] == '.')
-                current_sum -= 2;
-            ans = min(ans, current_sum);
-        }
+        cin >> grid[i];
     }
 
-    cout << (ans >= INF ? -1 : ans) << endl;
+    // First DFS pass
+    if (!dfs(0, 0))
+    {
+        cout << 0 << "\n";
+        return 0;
+    }
+
+    // Second DFS pass (using the updated grid where the first path is blocked)
+    if (!dfs(0, 0))
+    {
+        cout << 1 << "\n";
+    }
+    else
+    {
+        cout << 2 << "\n";
+    }
+
     return 0;
 }
